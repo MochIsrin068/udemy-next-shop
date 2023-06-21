@@ -7,6 +7,7 @@ import React, { useState } from "react";
 import { useRouter } from "next/router";
 import { useMutation, useQueryClient } from "react-query";
 import { useSigIn } from "@/hooks/user";
+import Link from "next/link";
 // import { useSigIn } from "@/hooks/useSignin";
 
 export default function SignIn() {
@@ -123,6 +124,10 @@ export default function SignIn() {
         ) : (
           <Button type="submit">Sign In</Button>
         )}
+        &nbsp;&nbsp;
+        <Button type="button">
+          <Link href="/register">Register</Link>
+        </Button>
       </form>
     </Page>
   );

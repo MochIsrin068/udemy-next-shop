@@ -64,3 +64,34 @@ export function useSigIn() {
     signInLoading: mutation.isLoading,
   };
 }
+
+export function useRegister() {
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation(({ username, email, password }: any) =>
+    fetchJson("api/register", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        username,
+        email,
+        password,
+      }),
+    })
+  );
+
+  return {
+    register: async (username: string, email: string, password: string) => {
+      try {
+        const user = await mutation.mutateAsync({ username, email, password });
+        queryClient.setQueryData(USER_QUERY_KEY, user);
+
+        return true;
+      } catch (error) {
+        return false;
+      }
+    },
+    registerError: mutation.isError,
+    resgiterLoading: mutation.isLoading,
+  };
+}
